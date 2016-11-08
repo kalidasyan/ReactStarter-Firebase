@@ -1,11 +1,12 @@
 var React = require('react');
+var ListItem = require('./list-item');
 
 module.exports = React.createClass({
   render: function() {
     console.log(this.props.items);
-    return <ul>
+    return <div>
       {this.renderList()}
-    </ul>
+    </div> 
   },
   renderList: function() {
     if(this.props.items && Object.keys(this.props.items).length === 0){
@@ -20,10 +21,13 @@ module.exports = React.createClass({
         * which contains a '.key' object, need to filter out this object.
         */
         if(key != '.key') {
+          var item = this.props.items[key];
+          item.key = key;
           children.push(
-            <li>
-              {this.props.items[key].text}
-            </li>
+            <ListItem
+              item = {item}
+              key = {key}
+            />
           )
         }
 
