@@ -24,7 +24,7 @@ var Hello = React.createClass({
         <h2 className="text-center">
           To-DO List
         </h2>
-        <Header />
+        <Header itemsStore={this.firebaseRefs.items}/>
       </div>
     </div>
   }
