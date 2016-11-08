@@ -21,9 +21,10 @@ var Hello = React.createClass({
     }
   },
   componentWillMount: function() {
-    var ref = Firebase.database().ref("items");
-    this.bindAsObject(ref, "items");
-    ref.on('value', this.handleDataLoaded);
+    this.ref = Firebase.database().ref("items");
+    this.bindAsObject(this.ref, "items");
+    //TODO: comment
+    this.ref.on('value', this.handleDataLoaded);
   },
   render: function() {
     return <div className="row panel panel-default">
@@ -36,8 +37,32 @@ var Hello = React.createClass({
         <div className={"content " + (this.state.loaded ? 'loaded' : '')}>
           <List items={this.state.items} />
         </div>
+        {this.deleteButton()}
       </div>
     </div>
+  },
+  deleteButton: function() {
+    if(!this.state.loaded){
+      return
+    } else {
+      return <div className="text-center clear-complete">
+        <hr />
+        <button
+          type="button"
+          onClick={this.onDeleteDoneClick}
+          className="btn btn-default">
+            Clear Complete
+          </button>
+      </div>
+    }
+  },
+  onDeleteDoneClick: function() {
+    for(var key in this.state.items){
+      //Just to be explicit, equal to true is optional
+      if(this.state.items[key].done === true){
+        this.ref.child(key).remove();
+      }
+    }
   },
   handleDataLoaded: function() {
     this.setState({loaded: true});
