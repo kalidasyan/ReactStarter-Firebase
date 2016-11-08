@@ -6,7 +6,7 @@ module.exports = React.createClass({
     console.log(this.props.items);
     return <div>
       {this.renderList()}
-    </div> 
+    </div>
   },
   renderList: function() {
     if(this.props.items && Object.keys(this.props.items).length === 0){
@@ -15,12 +15,12 @@ module.exports = React.createClass({
       </h4>
     } else {
       var children = [];
-
+      console.log(this.props.items);
       for(var key in this.props.items) {
         /* the new version return Object {-KW0Lvio-PIpIDP12D95: Object, .key: "items"}
         * which contains a '.key' object, need to filter out this object.
         */
-        if(key != '.key') {
+        if(key != '.key' && key != '.value') {
           var item = this.props.items[key];
           item.key = key;
           children.push(
